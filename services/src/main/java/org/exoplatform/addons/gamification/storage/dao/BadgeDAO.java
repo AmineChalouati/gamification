@@ -39,6 +39,21 @@ public class BadgeDAO extends GenericDAOJPAImpl<BadgeEntity, Long> {
         }
 
     }
+
+    public List<BadgeEntity> findEnabledBadgesByDomaindByScore(String domain, String neededScore) throws PersistenceException {
+
+        TypedQuery<BadgeEntity> query = getEntityManager().createNamedQuery("GamificationBadge.findEnabledBadgesByDomaindByScore", BadgeEntity.class)
+                .setParameter("badgeDomain", domain)
+                .setParameter("badgeScore", neededScore);
+
+        try {
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+    }
+
     public List<BadgeEntity> findEnabledBadgesByDomain(String domain) throws PersistenceException {
 
         TypedQuery<BadgeEntity> query = getEntityManager().createNamedQuery("GamificationBadge.findEnabledBadgeByDomain", BadgeEntity.class)

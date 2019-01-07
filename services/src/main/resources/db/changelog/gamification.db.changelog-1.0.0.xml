@@ -202,6 +202,47 @@
             <column name="ACTION_DATE" type="DATE"/>
         </createIndex>
     </changeSet>
-
+    <changeSet author="exo-gamification" id="1.0.0-11" runOnChange="true">
+        <createTable tableName="GAMIFICATION_EARNED_BADGE">
+            <column name="ID" type="BIGINT" autoIncrement="${autoIncrement}" startWith="1">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_GAMIFICATION_EARNED_BADGE"/>
+            </column>
+            <column name="TITLE" type="NVARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="DESCRIPTION" type="NVARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_SOCIAL_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EARNED_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SCORE" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DOMAIN" type="NVARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENT" type="BIT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+        </modifySql>
+    </changeSet>
+    <changeSet author="exo-gamification" id="1.0.0-12" dbms="oracle,postgresql">
+        <createSequence sequenceName="SEQ_GAMIFICATION_EARNED_BADGE_ID" startValue="1"/>
+    </changeSet>
+    <!-- Add index for performance -->
+    <changeSet author="exo-gamification" id="1.0.0-13">
+        <createIndex indexName="IDX_GAMIFICATION_EARNED_BADGE_01"
+                     tableName="GAMIFICATION_EARNED_BADGE">
+            <column name="TITLE" type="DATE"/>
+            <column name="USER_SOCIAL_ID" type="BIGINT"/>
+        </createIndex>
+    </changeSet>
 
 </databaseChangeLog>

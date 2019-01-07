@@ -1,7 +1,11 @@
 package org.exoplatform.addons.gamification.service.effective;
 
+import org.exoplatform.addons.gamification.entities.domain.configuration.BadgeEntity;
+import org.exoplatform.addons.gamification.entities.domain.effective.EarnedBadgeEntity;
 import org.exoplatform.addons.gamification.entities.domain.effective.GamificationActionsHistory;
 import org.exoplatform.addons.gamification.storage.dao.GamificationHistoryDAO;
+import org.exoplatform.addons.gamification.service.dto.configuration.BadgeDTO;
+import org.exoplatform.addons.gamification.storage.dao.*;
 import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -14,14 +18,20 @@ import java.util.Date;
 import java.util.List;
 
 public class GamificationService {
-
     private static final Log LOG = ExoLogger.getLogger(GamificationService.class);
 
     protected final GamificationHistoryDAO gamificationHistoryDAO;
+    protected final EarnedBadgeDAO earnedBadgeDAO;
+    protected final BadgeDAO badgeDAO;
 
-    public GamificationService(GamificationHistoryDAO gamificationHistoryDAO) {
+
+    public GamificationService(GamificationHistoryDAO gamificationHistoryDAO,
+                               EarnedBadgeDAO earnedBadgeDAO,
+                               BadgeDAO badgeDAO) {
 
         this.gamificationHistoryDAO = gamificationHistoryDAO;
+        this.earnedBadgeDAO = earnedBadgeDAO;
+        this.badgeDAO = badgeDAO;
     }
 
     @ExoTransactional
@@ -310,5 +320,31 @@ public class GamificationService {
         }
 
         return list;
+    }
+
+    /** Services to manage notification for earned points*/
+    /**
+     * Save EarnedBadgeEntity
+     * @param earnedBadgeEntity :
+     */
+    @ExoTransactional
+    public void saveEarnedBadge(EarnedBadgeEntity earnedBadgeEntity) {
+        try {
+            earnedBadgeDAO.create(earnedBadgeEntity);
+
+        } catch (Exception e) {
+            LOG.error("Error to save the Earned Badge {}", earnedBadgeEntity, e);
+        }
+    }
+
+    @ExoTransactional
+    public List<BadgeEntity> findEarnedBadgesByDomainUserIdByScore(String domain, int neededScore) {
+        try {
+            return badgeDAO.findEnabledBadgesByDomaindByScore(domain,String.valueOf(neededScore));
+
+        } catch (Exception e) {
+            LOG.error("Error to find badges with following criteria domain : {} and neededScore {}", domain, neededScore, e);
+        }
+        return null;
     }
 }
