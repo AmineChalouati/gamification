@@ -1,7 +1,11 @@
 package org.exoplatform.addons.gamification.service.effective;
 
+import org.exoplatform.addons.gamification.entities.domain.configuration.BadgeEntity;
+import org.exoplatform.addons.gamification.entities.domain.effective.EarnedBadgeEntity;
 import org.exoplatform.addons.gamification.entities.domain.effective.GamificationActionsHistory;
 import org.exoplatform.addons.gamification.storage.dao.GamificationHistoryDAO;
+import org.exoplatform.addons.gamification.service.dto.configuration.BadgeDTO;
+import org.exoplatform.addons.gamification.storage.dao.*;
 import org.exoplatform.commons.api.persistence.ExoTransactional;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -13,17 +17,21 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.List;
 
-import static java.util.Date.*;
-
 public class GamificationService {
-
     private static final Log LOG = ExoLogger.getLogger(GamificationService.class);
 
     protected final GamificationHistoryDAO gamificationHistoryDAO;
+    protected final EarnedBadgeDAO earnedBadgeDAO;
+    protected final BadgeDAO badgeDAO;
 
-    public GamificationService(GamificationHistoryDAO gamificationHistoryDAO) {
+
+    public GamificationService(GamificationHistoryDAO gamificationHistoryDAO,
+                               EarnedBadgeDAO earnedBadgeDAO,
+                               BadgeDAO badgeDAO) {
 
         this.gamificationHistoryDAO = gamificationHistoryDAO;
+        this.earnedBadgeDAO = earnedBadgeDAO;
+        this.badgeDAO = badgeDAO;
     }
 
     @ExoTransactional
@@ -49,8 +57,9 @@ public class GamificationService {
     /**
      * Get actionsHistory entities
      * @param date : filter by date
-     * @param socialId : filter by socialId*/
-
+     * @param socialId : filter by socialId
+     * @return List of object of type GamificationActionsHistory
+     */
     @ExoTransactional
     public List<GamificationActionsHistory> findActionHistoryByDateBySocialId(Date date, String socialId) {
 
@@ -186,12 +195,12 @@ public class GamificationService {
                 // Check the period
                 if (filter.getPeriod().equals(LeaderboardFilter.Period.WEEK.name())) {
 
-                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDate(from(now.with(DayOfWeek.MONDAY).atStartOfDay(ZoneId.systemDefault()).toInstant()), isGlobalContext, filter.getLoadCapacity());
+                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDate(Date.from(now.with(DayOfWeek.MONDAY).atStartOfDay(ZoneId.systemDefault()).toInstant()), isGlobalContext, filter.getLoadCapacity());
 
 
                 } else if (filter.getPeriod().equals(LeaderboardFilter.Period.MONTH.name())) {
 
-                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDate(from(now.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant()), isGlobalContext, filter.getLoadCapacity());
+                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDate(Date.from(now.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant()), isGlobalContext, filter.getLoadCapacity());
 
                 } else {
                     leaderboard = gamificationHistoryDAO.findAllActionsHistory(isGlobalContext, filter.getLoadCapacity());
@@ -205,12 +214,12 @@ public class GamificationService {
                 // Check the period
                 if (filter.getPeriod().equals(LeaderboardFilter.Period.WEEK.name())) {
 
-                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDateByDomain(from(now.with(DayOfWeek.MONDAY).atStartOfDay(ZoneId.systemDefault()).toInstant()), filter.getDomain(),isGlobalContext, filter.getLoadCapacity());
+                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDateByDomain(Date.from(now.with(DayOfWeek.MONDAY).atStartOfDay(ZoneId.systemDefault()).toInstant()), filter.getDomain(),isGlobalContext, filter.getLoadCapacity());
 
 
                 } else if (filter.getPeriod().equals(LeaderboardFilter.Period.MONTH.name())) {
 
-                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDateByDomain(from(now.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant()),filter.getDomain(), isGlobalContext,filter.getLoadCapacity());
+                    leaderboard = gamificationHistoryDAO.findActionsHistoryByDateByDomain(Date.from(now.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant()),filter.getDomain(), isGlobalContext,filter.getLoadCapacity());
 
                 } else {
                     leaderboard = gamificationHistoryDAO.findAllActionsHistoryByDomain(filter.getDomain(), isGlobalContext,filter.getLoadCapacity());
@@ -313,46 +322,29 @@ public class GamificationService {
         return list;
     }
 
-
-
-    /** Provided as an API from points n
-    list to  find gamification history from user GamificationInformationsPortlet earned points by date
-    */
- /*   @ExoTransactional
-    public List<GamificationActionsHistory> findActionsHistoryByUserId(String userId, boolean isGlobalContext, int loadCapacity) {
-
-        List<GamificationActionsHistory> list = null;
+    /** Services to manage notification for earned points*/
+    /**
+     * Save EarnedBadgeEntity
+     * @param earnedBadgeEntity :
+     */
+    @ExoTransactional
+    public void saveEarnedBadge(EarnedBadgeEntity earnedBadgeEntity) {
         try {
-            //--- Get List
-            list = gamificationHistoryDAO.findActionsHistoryByUserIdSortedByDate(userId, isGlobalContext,loadCapacity);
+            earnedBadgeDAO.create(earnedBadgeEntity);
 
         } catch (Exception e) {
-            LOG.error("Error to find gamification history from user {} GamificationInformationsPortlet earn points", e);
+            LOG.error("Error to save the Earned Badge {}", earnedBadgeEntity, e);
         }
-
-        return list;
-
     }
-*/
 
-
-/** Provided as an API from points n
- list to  find gamification history from the GamificationInformationsPortlet's receiver earned points by date
- */
-   @ExoTransactional
-    public List<GamificationActionsHistory> findActionsHistoryByReceiverId(String Receiver, boolean isGlobalContext, int loadCapacity) {
-
-        List<GamificationActionsHistory> list = null;
+    @ExoTransactional
+    public List<BadgeEntity> findEarnedBadgesByDomainUserIdByScore(String domain, int neededScore) {
         try {
-            //--- Get List
-            list = gamificationHistoryDAO.findActionsHistoryByReceiverIdSortedByDate(Receiver, isGlobalContext,loadCapacity);
+            return badgeDAO.findEnabledBadgesByDomaindByScore(domain,String.valueOf(neededScore));
 
         } catch (Exception e) {
-            LOG.error("Error to find gamification history from user {} GamificationInformationsPortlet earn points", e);
+            LOG.error("Error to find badges with following criteria domain : {} and neededScore {}", domain, neededScore, e);
         }
-
-        return list;
-
+        return null;
     }
-
 }

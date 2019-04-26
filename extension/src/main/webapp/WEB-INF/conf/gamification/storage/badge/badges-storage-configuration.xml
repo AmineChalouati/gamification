@@ -47,6 +47,7 @@
     <!-- ############################################################################################ -->
     <!-- #################### Gamification Badge Config : Social FLOW ############################### -->
     <!-- ############################################################################################ -->
+    <!--
     <external-component-plugins>
         <target-component>org.exoplatform.addons.gamification.service.setting.badge.BadgeRegistry</target-component>
         <component-plugin>
@@ -251,9 +252,11 @@
             </init-params>
         </component-plugin>
     </external-component-plugins>
+    -->
     <!-- ############################################################################################ -->
-    <!-- #################### Gamification Badge Config : Knowldge FLOW ############################### -->
+    <!-- #################### Gamification Badge Config : Knowldge FLOW ############################# -->
     <!-- ############################################################################################ -->
+    <!--
     <external-component-plugins>
         <target-component>org.exoplatform.addons.gamification.service.setting.badge.BadgeRegistry</target-component>
         <component-plugin>
@@ -423,7 +426,7 @@
                 </value-param>
             </init-params>
         </component-plugin>
-    </external-component-plugins>
+    </external-component-plugins >
     <external-component-plugins>
         <target-component>org.exoplatform.addons.gamification.service.setting.badge.BadgeRegistry</target-component>
         <component-plugin>
@@ -458,5 +461,6 @@
             </init-params>
         </component-plugin>
     </external-component-plugins>
+    -->
 
 </configuration>

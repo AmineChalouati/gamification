@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (C) 2018 eXo Platform SAS. This is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version. This software is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+  for more details. You should have received a copy of the GNU Lesser General Public License along with this software; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA, or see the FSF site: http://www.fsf.org. -->
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
+               xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
+
+    <external-component-plugins>
+        <target-component>org.exoplatform.commons.api.notification.service.setting.PluginSettingService
+        </target-component>
+        <component-plugin profiles="all">
+            <name>notification.groups</name>
+            <set-method>registerGroupConfig</set-method>
+            <type>org.exoplatform.commons.api.notification.plugin.GroupProviderPlugin</type>
+            <description>Gamification group</description>
+            <init-params>
+                <object-param>
+                    <name>group.gamification</name>
+                    <description>The information of group kudos</description>
+                    <object type="org.exoplatform.commons.api.notification.plugin.config.GroupConfig">
+                        <field name="id">
+                            <string>Gamifcation</string>
+                        </field>
+                        <field name="resourceBundleKey">
+                            <string>UINotification.label.group.Gamification</string>
+                        </field>
+                        <field name="order">
+                            <string>200</string>
+                        </field>
+                    </object>
+                </object-param>
+            </init-params>
+        </component-plugin>
+    </external-component-plugins>
+    <external-component-plugins>
+        <target-component>org.exoplatform.commons.api.notification.service.setting.PluginContainer</target-component>
+        <!-- Badges earned notification plugin -->
+        <component-plugin>
+            <name>notification.plugins</name>
+            <set-method>addPlugin</set-method>
+            <type>org.exoplatform.addons.gamification.notification.plugin.GamificationEarnedBadgeNotificationPlugin
+            </type>
+            <init-params>
+                <object-param>
+                    <name>template.GamificationEarnedBadgeNotificationPlugin</name>
+                    <description>The template of GamificationEarnedBadgeNotificationPlugin</description>
+                    <object type="org.exoplatform.commons.api.notification.plugin.config.PluginConfig">
+                        <field name="pluginId">
+                            <string>GamificationEarnedBadgeNotificationPlugin</string>
+                        </field>
+                        <field name="resourceBundleKey">
+                            <string>UINotification.label.GamificationEarnedBadgeNotificationPlugin</string>
+                        </field>
+                        <field name="order">
+                            <string>4</string>
+                        </field>
+                        <field name="defaultConfig">
+                            <collection type="java.util.ArrayList">
+                                <value>
+                                    <string>Instantly</string>
+                                </value>
+                            </collection>
+                        </field>
+                        <field name="groupId">
+                            <string>Gamifcation</string>
+                        </field>
+                        <field name="bundlePath">
+                            <string>locale.notification.BadgesNotification</string>
+                        </field>
+                    </object>
+                </object-param>
+            </init-params>
+        </component-plugin>
+    </external-component-plugins>
+    <external-component-plugins>
+        <target-component>org.exoplatform.commons.api.notification.channel.ChannelManager</target-component>
+        <component-plugin>
+            <name>web.channel.gamification.template</name>
+            <set-method>registerTemplateProvider</set-method>
+            <type>org.exoplatform.addons.gamification.notification.provider.WebTemplateProvider</type>
+            <init-params>
+                <value-param>
+                    <name>channel-id</name>
+                    <value>WEB_CHANNEL</value>
+                </value-param>
+            </init-params>
+        </component-plugin>
+        <component-plugin>
+            <name>mail.channel.gamification.template</name>
+            <set-method>registerTemplateProvider</set-method>
+            <type>org.exoplatform.addons.gamification.notification.provider.MailTemplateProvider</type>
+            <init-params>
+                <value-param>
+                    <name>channel-id</name>
+                    <value>MAIL_CHANNEL</value>
+                </value-param>
+            </init-params>
+        </component-plugin>
+        <component-plugin>
+            <name>push.channel.gamification.template</name>
+            <set-method>registerTemplateProvider</set-method>
+            <type>org.exoplatform.addons.gamification.notification.provider.MobileTemplateProvider</type>
+            <init-params>
+                <value-param>
+                    <name>channel-id</name>
+                    <value>PUSH_CHANNEL</value>
+                </value-param>
+            </init-params>
+        </component-plugin>
+    </external-component-plugins>
+</configuration>

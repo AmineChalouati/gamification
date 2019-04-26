@@ -61,4 +61,47 @@
         <type>org.exoplatform.addons.gamification.rest.GamificationRestEndpoint</type>
     </component>
     <!-- END -->
+
+    <!-- Configure Job to computed badges earned by each user-->
+    <external-component-plugins>
+        <target-component>org.exoplatform.services.scheduler.JobSchedulerService</target-component>
+        <component-plugin>
+            <name>AddCronJob</name>
+            <set-method>addCronJob</set-method>
+            <type>org.exoplatform.services.scheduler.CronJob</type>
+            <description>Start computing badges earned by users</description>
+            <init-params>
+                <properties-param>
+                    <name>cronjob.info</name>
+                    <description>Start checking condidate badgest</description>
+                    <property name="jobName" value="gamificationComputeEarnedBadgesJobt"/>
+                    <property name="groupName" value="gamificationJobs"/>
+                    <property name="job" value="org.exoplatform.addons.gamification.job.ComputeEarnedBadgesJob"/>
+                    <property name="expression"
+                              value="${exo.addons.gamification.job.badges.compute.expression:0 0 21 * * ?}"/>
+                </properties-param>
+            </init-params>
+        </component-plugin>
+    </external-component-plugins>
+    <!-- Configure Job to distribute badges earned by each user-->
+    <external-component-plugins>
+        <target-component>org.exoplatform.services.scheduler.JobSchedulerService</target-component>
+        <component-plugin>
+            <name>AddCronJob</name>
+            <set-method>addCronJob</set-method>
+            <type>org.exoplatform.services.scheduler.CronJob</type>
+            <description>Start distributing badges earned by users</description>
+            <init-params>
+                <properties-param>
+                    <name>cronjob.info</name>
+                    <description>Start checking condidate badgest</description>
+                    <property name="jobName" value="gamificationDistributeEarnedBadgesJobt"/>
+                    <property name="groupName" value="gamificationJobs"/>
+                    <property name="job" value="org.exoplatform.addons.gamification.job.DistributeEarnedBadgesJob"/>
+                    <property name="expression"
+                              value="${exo.addons.gamification.job.badges.distribute.expression:0 0 21 * * ?}"/>
+                </properties-param>
+            </init-params>
+        </component-plugin>
+    </external-component-plugins>
 </configuration>
