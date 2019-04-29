@@ -61,8 +61,12 @@ public class GamificationActivityListener extends ActivityListenerPlugin impleme
         // To hold GamificationRule
         RuleDTO ruleDto = null;
 
+
+
+
         // Add activity on Space Stream : Compute actor reward
         if (isSpaceActivity(activity) && !activity.getType().equals("SPACE_ACTIVITY")) {
+
             // Get associated rule :
             ruleDto = ruleService.findEnableRuleByTitle(GAMIFICATION_SOCIAL_ADD_ACTIVITY_SPACE_STREAM);
 
@@ -97,7 +101,10 @@ public class GamificationActivityListener extends ActivityListenerPlugin impleme
                     LOG.error("Error to process gamification for Rule {}", ruleDto.getTitle(), e);
                 }
             }
-        } else { // Comment in the context of User Stream
+        } else {
+
+
+            // Comment in the context of User Stream
 
             // User comment on his own Stream : no XP should be assigned
             if (activity.getPosterId().equalsIgnoreCase(activity.getStreamId()) && !activity.getType().equals("SPACE_ACTIVITY")) {
@@ -134,6 +141,7 @@ public class GamificationActivityListener extends ActivityListenerPlugin impleme
                     }
                 }
 
+
                 // Get associated rule : Each user who get a new activity on his stream will be rewarded
                 ruleDto = ruleService.findEnableRuleByTitle(GamificationListener.GAMIFICATION_SOCIAL_ADD_ACTIVITY_TARGET_USER_STREAM);
 
@@ -148,6 +156,28 @@ public class GamificationActivityListener extends ActivityListenerPlugin impleme
                         LOG.error("Error to process gamification for Rule {}", ruleDto.getTitle(), e);
                     }
                 }
+
+                if((!activity.getType().equalsIgnoreCase("LINK_ACTIVITY"))){                                                                                 ;
+                    return ;
+                }
+                if((!activity.getType().equalsIgnoreCase("DOC_ACTIVITY"))){
+
+                    ruleDto = ruleService.findEnableRuleByTitle(GamificationListener.GAMIFICATION_KNOWLEDGE_SHARE_UPLOAD__DOCUMENT_NETWORK_STREAM);
+
+
+                    if (ruleDto != null){
+                        try {
+                            aHistory = build(ruleDto, activity.getPosterId(),activity.getPosterId(),"/portal/intranet/activity?id="+activity.getId());
+                            gamificationProcessor.execute(aHistory);
+                            // Gamification simple audit logger
+                            LOG.info("service=gamification operation=add-new-entry parameters=\"date:{},user_social_id:{},global_score:{},domain:{},action_title:{},action_score:{}\"", LocalDate.now(),aHistory.getUserSocialId(), aHistory.getGlobalScore(), ruleDto.getArea(), ruleDto.getTitle(), ruleDto.getScore());
+                        } catch (Exception e) {
+                            LOG.error("Error to process gamification for Rule {}", ruleDto.getTitle(), e);
+                        }
+                    }
+                }
+
+
 
             }
 

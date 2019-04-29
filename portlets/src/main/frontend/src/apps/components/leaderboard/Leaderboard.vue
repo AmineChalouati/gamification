@@ -622,5 +622,6 @@
     .load-more {
         float: right;
         padding: 15px;
+        COLOR: blue;
     }
 </style>
