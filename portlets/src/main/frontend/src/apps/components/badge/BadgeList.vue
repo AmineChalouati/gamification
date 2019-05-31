@@ -54,13 +54,8 @@
                             <span v-if="editedbadge.id !== badge.id">
 
                                 <img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail" class="m-1"  width="40" height="40"/>
-
-
                             </span>
-                            <form  v-else id="icon-Edit">
-                                <b-form-file v-model="badge.icon" placeholder="+" accept="image/jpeg, image/png, image/gif"></b-form-file>
-
-                            </form>
+                            <b-form-file v-if="editedbadge.id === badge.id" v-model="badge.icon" placeholder="Choose a file..." accept="image/jpeg, image/png, image/gif"></b-form-file>
                         </td>
                         <td class="badge-status-col">
                             <div v-if="editedbadge.id !== badge.id">

@@ -17,6 +17,7 @@
                         <a class="uiIconClose pull-right"  aria-controls="collapseOne" aria-expanded="false" data-target="#collapseOne" data-toggle="collapse" aria-hidden="true" data-dismiss="modal" ></a>
                         <span class="PopupTitle popupTitle">Add Rule</span>
                     </div>
+                        <div class="PopupContent popupContent">
                                     <form-group id="titleInputGroup">
                                         <label class="col-form-label pt-0">Title:</label>
                                         <input id="titleInput" type="text" v-model="rule.title" v-on:click="ModifierFn" required placeholder="Enter rule's title">
@@ -70,12 +71,11 @@
                                         </label>
 
                                     </div>  -->
-
-                                    <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                        <label class="custom-control-label" for="customSwitch1" v-model="rule.enabled"> Enable rule
-                                        </label>
-                                    </div>
+                        <label class="switch">
+                            <input type="checkbox" v-model="rule.enabled" checked>
+                            <span class="slider round"></span>
+                            <span class="absolute-no">NO</span>
+                        </label>
 
 
                                     <form id="areaSelectboxGroup">
@@ -106,6 +106,7 @@
                         </div>
                 </div>
                 </div>
+                </div>
                             </div>
 
 
@@ -125,7 +126,7 @@
    // Vue.use(datePicker);
     export default {
         props: ['rule'],
-        data() {
+        data: function (){
             return {
                 formErrors: {},
                 selectedFile: undefined,
@@ -180,14 +181,20 @@
             countDownChanged(dismissCountDown) {
                 this.dismissCountDown = dismissCountDown
             },
+            confirm() {
+                this.$modals.confirm({
+                    message: 'Confirm?',
+                    onApprove: () => { },
+                    onCancel: () => { },
+                });
+            },
+            created() {
+
+            }
         }
 
     }
-    $(function() {
-        $('#toggle-event').change(function() {
-            $('#console-event').html('Toggle: ' + $(this).prop('checked'))
-        })
-    })
+
 </script>
 
 <style scoped>
@@ -288,7 +295,7 @@
         display: inline-block;
         padding: 1.25rem 0.75rem;
     }
-    button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary{
+    button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary, btn{
         background: #3c8dbc;
         color: white;
         padding: 5px 10px;
@@ -327,6 +334,101 @@
         min-width: 100%;
         z-index: 100;
         padding: 2px 20px;
+    }
+    /* switch test */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 150px;
+        height: 50px;
+        zoom: 50%;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f2f2f2;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        z-index: 2;
+        content: "";
+        height: 65px;
+        width: 54px;
+        left: 2px;
+        bottom: -1px;
+        background-color: darkgrey;
+        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        -webkit-transition: .4s;
+        transition: all 0.4s ease-in-out;
+    }
+    .slider:after {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        content: "YES";
+        font-size: 45px;
+        text-align: left !important;
+        line-height: 51px;
+        padding-left: 0;
+        width: 130px;
+        color: #fff;
+        height: 50px;
+        border-radius: 100px;
+        background-color: #578dc9;
+        -webkit-transform: translateX(-160px);
+        -ms-transform: translateX(-160px);
+        transform: translateX(-160px);
+        transition: all 0.4s ease-in-out;
+    }
+
+    input:checked + .slider:after {
+        -webkit-transform: translateX(0px);
+        -ms-transform: translateX(0px);
+        transform: translateX(0px);
+        /*width: 235px;*/
+        padding-left: 25px;
+    }
+
+    input:checked + .slider:before {
+        background-color: #fff;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(160px);
+        -ms-transform: translateX(160px);
+        transform: translateX(160px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 100px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    .absolute-no {
+        position: absolute;
+        left: 0;
+        color: darkgrey;
+        text-align: right !important;
+        font-size: 40px;
+        width: calc(100% - 25px);
+        height: 84px;
+        line-height: 51px;
+        cursor: pointer;
     }
    /* div#collapseOne .card {
         position: relative;

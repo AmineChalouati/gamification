@@ -54,7 +54,28 @@
                                 <!--<option value="Content">Content</option>-->
                             </select>
                         </td>
-                        <td>{{rule.enabled}}</td>
+
+                        <td class="badge-status-col">
+                            <div v-if="editedrule.id !== rule.id">
+                                <label class="switch">
+                                    <input type="checkbox" v-model="rule.enabled">
+                                    <span class="slider round"></span>
+                                    <span class="absolute-no">NO</span>
+                                </label>
+                            </div>
+
+                            <div v-if="editedrule.id === rule.id">
+                                <label class="switch">
+                                    <input type="checkbox" v-model="rule.enabled" checked>
+                                    <span class="slider round"></span>
+                                    <span class="absolute-no">NO</span>
+                                </label>
+                            </div>
+                        </td>
+
+
+
+
                         <td>
                              <a href="#" v-if="editedrule.id !== rule.id" v-on:click.stop="onEdit(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                 data-original-title="Edit" v-b-tooltip.hover title="Edit">
@@ -113,7 +134,7 @@
             },
             onCancel(rule) {
 
-                this.$emit('cancel', rule);
+               // this.$emit('cancel', rule);
                 this.editedrule= {};
 
             },
@@ -169,5 +190,101 @@
 
     input.rule-desc-col {
         min-width: 98%;
+    }
+
+    /* switch test */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 150px;
+        height: 50px;
+        zoom: 30%;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #f2f2f2;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        z-index: 2;
+        content: "";
+        height: 65px;
+        width: 54px;
+        left: 2px;
+        bottom: -1px;
+        background-color: darkgrey;
+        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+        -webkit-transition: .4s;
+        transition: all 0.4s ease-in-out;
+    }
+    .slider:after {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        content: "YES";
+        font-size: 45px;
+        text-align: left !important;
+        line-height: 51px;
+        padding-left: 0;
+        width: 130px;
+        color: #fff;
+        height: 50px;
+        border-radius: 100px;
+        background-color: #578dc9;
+        -webkit-transform: translateX(-160px);
+        -ms-transform: translateX(-160px);
+        transform: translateX(-160px);
+        transition: all 0.4s ease-in-out;
+    }
+
+    input:checked + .slider:after {
+        -webkit-transform: translateX(0px);
+        -ms-transform: translateX(0px);
+        transform: translateX(0px);
+        /*width: 235px;*/
+        padding-left: 25px;
+    }
+
+    input:checked + .slider:before {
+        background-color: #fff;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(160px);
+        -ms-transform: translateX(160px);
+        transform: translateX(160px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 100px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    .absolute-no {
+        position: absolute;
+        left: 0;
+        color: darkgrey;
+        text-align: right !important;
+        font-size: 40px;
+        width: calc(100% - 25px);
+        height: 84px;
+        line-height: 51px;
+        cursor: pointer;
     }
 </style>
