@@ -25,7 +25,7 @@
                         </td>
                         <td class="badge-desc-col">
                             <div v-if="editedbadge.id !== badge.id">{{badge.description}}</div>
-                            <input class="badge-desc-col" type="text" v-if="editedbadge.id === badge.id" v-model="badge.description">
+                            <input class="badge-desc-col" type="text" v-if="editedbadge.id === badge.id" v-model="badge.description" style="min-width: 98%;">
                         </td>
                         <td class="badge-needed-score-col">
                             <div v-if="editedbadge.id !== badge.id">{{badge.neededScore}}</div>

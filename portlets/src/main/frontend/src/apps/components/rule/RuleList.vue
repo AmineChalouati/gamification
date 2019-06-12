@@ -27,7 +27,7 @@
                         <td><div v-if="editedrule.id !== rule.id">{{rule.score}}</div>
                             <input  class="rule-needed-score-col" type="text" v-if="editedrule.id === rule.id" v-model="rule.score">
                         </td>
-                        <td><div v-if="editedrule.id !== rule.id">{{rule.area}}</div>
+                        <td style="max-width: 165px;"><div v-if="editedrule.id !== rule.id">{{rule.area}}</div>
                             <select type="text" v-if="editedrule.id === rule.id" v-model="rule.area" class="mb-4" style="height: 38px;" required>
                                 <template slot="first">
 
@@ -44,11 +44,23 @@
                         </td>
 
                         <td class="rule-status-col">
+                            <div v-if="editedrule.id !== rule.id">
                             <div class="custom-control custom-checkbox custom-control-inline">
-                                <label class="checkbox custom-checkbox" id="enableCheckboxGroup">
-                                    <input type="checkbox" v-model="rule.enabled" checked> Enable rule
+
+                                <label class="checkbox custom-checkbox" >
+                                    <input type="checkbox" v-model="rule.enabled" > Enable rule
                                 </label>
 
+                            </div>
+                                <div v-if="editedrule.id === rule.id">
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+
+                                        <label class="checkbox custom-checkbox" >
+                                            <input type="checkbox" v-model="rule.enabled" spellcheck="true">
+                                        </label>
+                                    </div>
+
+                                    </div>
                             </div>
                         </td>
 

@@ -102,7 +102,6 @@
                 const MAX_RANDOM_NUMBER = 100000;
                 const uploadId = Math.round(Math.random() * MAX_RANDOM_NUMBER);
 
-
                 axios.post(`/portal/upload?uploadId=${uploadId}&action=upload`, formData,
                     {
                         headers: {
@@ -117,12 +116,10 @@
                             this.updateMessage = 'added'
                         })
                         .catch(e => {
-
                             this.addError = true
                             this.errors.push(e)
 
                         })
-
 
                 })
                     .catch(e => {

@@ -302,6 +302,9 @@
     div#headingOne:hover {
         background: transparent;
     }
+    div#headingOne {
+        box-shadow: none;
+    }
     .btn {
         display: inline-block;
         padding: 1.25rem 0.75rem;
@@ -450,4 +453,5 @@
         margin: 0;
         background-color: rgba(0, 0, 0, 0.3);
     } */
+
 </style>
