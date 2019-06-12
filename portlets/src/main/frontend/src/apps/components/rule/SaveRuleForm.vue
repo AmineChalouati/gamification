@@ -18,16 +18,16 @@
                         <span class="PopupTitle popupTitle">Add Rule</span>
                     </div>
                         <div class="PopupContent popupContent">
-                                    <form-group id="titleInputGroup">
+                                    <form id="titleInputGroup">
                                         <label class="col-form-label pt-0">Title:</label>
-                                        <input id="titleInput" type="text" v-model="rule.title" v-on:click="ModifierFn" required placeholder="Enter rule's title">
+                                        <input id="titleInput" type="text" v-model="rule.title" required placeholder="Enter rule's title">
                                         </input>
 
 
                                         <b-alert v-if="formErrors.title" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
                                             Rule title is required please enter a title {{dismissCountDown}} ...
                                         </b-alert>
-                                    </form-group>
+                                    </form>
 
 
 
@@ -99,9 +99,6 @@
                                             </b-button>
                                         </b-col>
 
-                                        <b-col>
-                                            <button type="submit" v-if="rule.id" v-on:click.prevent="onCancel" class="btn btn-secondary">Cancel</button>
-                                        </b-col>
                                     </div>
                         </div>
                 </div>
@@ -123,6 +120,7 @@
     //import datePicker from 'vue-bootstrap-datetimepicker';
  //   import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css';
     Vue.use(BootstrapVue);
+    import axios from 'axios';
    // Vue.use(datePicker);
     export default {
         props: ['rule'],
@@ -174,7 +172,8 @@
             },
             onSubmit() {
                 if (this.validateForm()) {
-                    this.$emit('submit', this.rule)
+                    this.createRule(this.rule)
+
                 }
 
             },
@@ -187,6 +186,18 @@
                     onApprove: () => { },
                     onCancel: () => { },
                 });
+            },
+            createRule(ruleDTO) {
+                axios.post(`/rest/gamification/rules/add`, ruleDTO)
+                    .then(response => {
+                        this.$emit('sucessAdd', this.rule)
+
+                    })
+                    .catch(e => {
+                        this.$emit('failAdd', this.rule)
+                    })
+                //this.resetRuleInForm()
+
             },
             created() {
 

@@ -2,11 +2,11 @@
 <template>
     <section>
        
-        <b-alert v-if="addSuccess" variant="success" show dismissible>Rule {{updateMessage}} successully</b-alert>
+        <b-alert v-if="addSuccess" variant="success" show dismissible>Rule {{updateMessage}} successfully</b-alert>
       
         <b-alert v-if="addError" variant="danger" show dismissible>An error happen when adding a rule</b-alert>
        
-        <save-rule-form :rule="ruleInForm" v-on:submit="onRuleAction" v-on:cancel="resetRuleInForm"></save-rule-form>
+        <save-rule-form :rule="ruleInForm" v-on:sucessAdd="onRuleCreated" v-on:failAdd="onRuleFail" v-on:cancel="resetRuleInForm"></save-rule-form>
         <rule-list  :rules="rules" v-on:save="onSaveClicked" v-on:remove="onRemoveClicked"></rule-list>
 
     </section>
@@ -30,7 +30,9 @@
                 description: '',
                 score: null,
                 enabled: null,
-                area: ''
+                area: '',
+                lastModifiedBy: '',
+                lastModifiedDate: null
             },
             addSuccess: false,
             addError: false,
@@ -55,19 +57,17 @@
                 this.updateRule(rule)
             },
 
-            onRuleAction(rule) {
-                const index = this.rules.findIndex((p) => p.id === rule.id)
-                
-                if (index !== -1) {
-                   
-                    this.updateRule(rule)
-                    this.rules.splice(index, 1, rule)
-                } else {
-                   
-                    this.createRule(rule)
-                    this.rules.push(rule)
-                }
+            onRuleCreated(rule) {
 
+
+                this.addSuccess=true
+                this.updateMessage='added'
+                this.rules.push(rule)
+                this.resetRuleInForm()
+            },
+            onRuleFail(rule) {
+                this.addError=true
+                this.errors.push(e)
                 this.resetRuleInForm()
             },
             onRemoveClicked(ruleId, ruleTitle) {
@@ -87,34 +87,26 @@
                     this.resetRuleInForm()
                 }
             },
-            createRule(ruleDTO) {
-                axios.post(`/rest/gamification/rules/add`, ruleDTO)
-                    .then(response => {
-                       
-                        this.addSuccess=true
-                         this.updateMessage='added'
-                    })
-                    .catch(e => {
 
-                        this.addError=true
-                        this.errors.push(e)
-
-                    })
-                this.resetRuleInForm()
-
-            },
             updateRule(ruleDTO) {
                 axios.put(`/rest/gamification/rules/update`, ruleDTO)
                     .then(response => {
                          this.addSuccess=true; 
                          this.updateMessage='updated'
 
-                    })
+
                     .catch(e => {
                         this.addError=true                        
                         this.errors.push(e)
                     })
+                    })
+                    .catch(e => {
+
+                        console.log("Error")
+
+                    })
             }
+
 
         },
        
@@ -124,6 +116,7 @@
                     this.rules = response.data;
                 })
                 .catch(e => {
+                    this.addError=true
                     this.errors.push(e)
                 })
         }

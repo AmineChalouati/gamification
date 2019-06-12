@@ -3,18 +3,6 @@
     <b-container fluid>
         <b-row>
             <b-col sm="12">
-
-                <!-- <b-col md="6" class="my-1">
-                    <b-form-group horizontal label="Filter" class="mb-0">
-                      <b-input-group>
-                        <b-form-input v-model="filter" placeholder="Type to Search" />
-                        <b-input-group-append>
-                          <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
-                        </b-input-group-append>
-                      </b-input-group>
-                    </b-form-group>
-                  </b-col> -->
-
                 <table striped hover class="uiGrid table table-hover rule-table">
                     <thead>
                         <tr>
@@ -31,16 +19,16 @@
                     <tr v-for="rule in rules" track-by="id" v-on:click.prevent="onEdit(rule)">
 
                         <td> <div v-if="editedrule.id !== rule.id">{{rule.title}} </div>
-                            <input type="text" v-if="editedrule.id === rule.id" v-model="rule.title"style="width: 130px;">
+                            <input type="text" v-if="editedrule.id === rule.id" class="rule-title-col" v-model="rule.title"style="width: 130px; min-width: 98%;">
                         </td>
                         <td class="rule-desc-col"><div v-if="editedrule.id !== rule.id">{{rule.description}}</div>
-                            <input type="text" v-if="editedrule.id === rule.id" v-model="rule.description"style="width: 130px;">
+                            <input type="text" v-if="editedrule.id === rule.id" v-model="rule.description"style="width: 130px;min-width: 98%;">
                         </td>
                         <td><div v-if="editedrule.id !== rule.id">{{rule.score}}</div>
-                            <input  class="rule-needed-score-col" type="text" v-if="editedrule.id === rule.id" v-model="rule.neededScore">
+                            <input  class="rule-needed-score-col" type="text" v-if="editedrule.id === rule.id" v-model="rule.score">
                         </td>
                         <td><div v-if="editedrule.id !== rule.id">{{rule.area}}</div>
-                            <select type="text" v-if="editedrule.id === rule.id" v-model="badge.domain" class="mb-4" style="height: 38px;" required>
+                            <select type="text" v-if="editedrule.id === rule.id" v-model="rule.area" class="mb-4" style="height: 38px;" required>
                                 <template slot="first">
 
                                     <option :value="null" disabled></option>
@@ -55,32 +43,22 @@
                             </select>
                         </td>
 
-                        <td class="badge-status-col">
-                            <div v-if="editedrule.id !== rule.id">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="rule.enabled">
-                                    <span class="slider round"></span>
-                                    <span class="absolute-no">NO</span>
+                        <td class="rule-status-col">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <label class="checkbox custom-checkbox" id="enableCheckboxGroup">
+                                    <input type="checkbox" v-model="rule.enabled" checked> Enable rule
                                 </label>
-                            </div>
 
-                            <div v-if="editedrule.id === rule.id">
-                                <label class="switch">
-                                    <input type="checkbox" v-model="rule.enabled" checked>
-                                    <span class="slider round"></span>
-                                    <span class="absolute-no">NO</span>
-                                </label>
                             </div>
                         </td>
 
 
-
-
-                        <td>
+                        <td class="center actionContainer">
                              <a href="#" v-if="editedrule.id !== rule.id" v-on:click.stop="onEdit(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                 data-original-title="Edit" v-b-tooltip.hover title="Edit">
                                  <i class="uiIconEdit uiIconLightGray"></i></a>
-                             <a href="#" v-if="editedrule.id !== rule.id" v-on:click.prevent.stop="onRemove(rule.id,rule.title)" data-placement="bottom" rel="tooltip" class="actionIcon" data-original-title="Supprimer" v-b-tooltip.hover title="Supprimer">
+                             <a href="#" v-if="editedrule.id !== rule.id" v-on:click.prevent.stop="onRemove(rule.id,rule.title)" data-placement="bottom" rel="tooltip" class="actionIcon"
+                                data-original-title="Supprimer" v-b-tooltip.hover title="Supprimer">
                                  <i class="uiIconDelete uiIconLightGray"></i></a>
 
                             <a href="#" v-if="editedrule.id === rule.id"v-on:click.stop="onSave(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
@@ -126,15 +104,13 @@
         methods: {
             onEdit(rule) {
                 this.editedrule=rule;
-               // this.$emit('edit', rule)
+
             },
             onSave(rule) {
                 this.$emit('save', rule);
                 this.editedrule= {};
             },
             onCancel(rule) {
-
-               // this.$emit('cancel', rule);
                 this.editedrule= {};
 
             },
@@ -192,7 +168,7 @@
         min-width: 98%;
     }
 
-    /* switch test */
+    /* switch test
     .switch {
         position: relative;
         display: inline-block;
@@ -201,7 +177,7 @@
         zoom: 30%;
     }
 
-    .switch input {display:none;}
+   .switch input {display:none;}
 
     .slider {
         position: absolute;
@@ -254,7 +230,6 @@
         -webkit-transform: translateX(0px);
         -ms-transform: translateX(0px);
         transform: translateX(0px);
-        /*width: 235px;*/
         padding-left: 25px;
     }
 
@@ -268,7 +243,7 @@
         transform: translateX(160px);
     }
 
-    /* Rounded sliders */
+    Rounded sliders
     .slider.round {
         border-radius: 100px;
     }
@@ -286,5 +261,10 @@
         height: 84px;
         line-height: 51px;
         cursor: pointer;
+    } */
+
+    input.rule-needed-score-col{
+        max-width: 60px;
+        text-align: center;
     }
 </style>
