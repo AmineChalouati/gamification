@@ -48,29 +48,7 @@
                                             Rule score is required please enter a score {{dismissCountDown}} ...
                                         </b-alert>
                                     </form>
-                                    <!--<form id="startValidityInputGroup">
-                                        <label id="startValidityInputGroup" for="startValidityInput" class="col-form-label pt-0">Start validity:</label>
-                                        <date-picker name="endValidityDateInput" id="startValidityInput" v-model="rule.startValidity" :config="config" required placeholder="Enter rule's start validity"></date-picker>
-                                        <b-alert v-if="formErrors.startValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
-                                            Rule start validity date is required please enter a date {{dismissCountDown}} ...
-                                        </b-alert>
-                                    </form>
 
-                                    <form id="endValidityInputGroup">
-                                        <label id="endValidityInputGroup" for="endValidityInput" class="col-form-label pt-0">End validity:</label>
-                                        <date-picker name="endValidityDateInput" id="endValidityInput" v-model="rule.endValidity" :config="config" required placeholder="Enter rule's end validity"></date-picker>
-                                        <b-alert v-if="formErrors.endValidity" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
-                                            Rule end validity date is required please enter a date {{dismissCountDown}} ...
-                                        </b-alert>
-                                    </form>
-
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-
-                                        <label class="checkbox custom-checkbox" id="enableCheckboxGroup">
-                                            <input type="checkbox" v-model="rule.enabled"> Enable rule
-                                        </label>
-
-                                    </div>  -->
                         <label class="switch">
                             <input type="checkbox" v-model="rule.enabled" checked>
                             <span class="slider round"></span>
@@ -91,14 +69,12 @@
                                             <option value="Feedback">Feedback</option>
                                         </select>
                                     </form>
-
                                     <div class="row">
                                         <b-col>
-                                            <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">
+                                            <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit" >
                                                 {{rule.id ? 'Update' : 'Add'}} rule
                                             </b-button>
                                         </b-col>
-
                                     </div>
                         </div>
                 </div>
@@ -173,7 +149,6 @@
             onSubmit() {
                 if (this.validateForm()) {
                     this.createRule(this.rule)
-
                 }
 
             },
@@ -191,7 +166,7 @@
                 axios.post(`/rest/gamification/rules/add`, ruleDTO)
                     .then(response => {
                         this.$emit('sucessAdd', this.rule)
-
+                        this.SaveRuleForm().hide()
                     })
                     .catch(e => {
                         this.$emit('failAdd', this.rule)
@@ -267,11 +242,9 @@
         flex-basis: 0;
         flex-grow: 1;
     }
-
     .require-msg{
         max-width: 100% !important;
         font-size: 14px;
-        padding: 10px;
     }
     input {
         width: 100%;

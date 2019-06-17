@@ -1,4 +1,3 @@
-
 <template>
     <b-container fluid>
         <b-row>
@@ -30,41 +29,34 @@
                         <td style="max-width: 165px;"><div v-if="editedrule.id !== rule.id">{{rule.area}}</div>
                             <select type="text" v-if="editedrule.id === rule.id" v-model="rule.area" class="mb-4" style="height: 38px;" required>
                                 <template slot="first">
-
                                     <option :value="null" disabled></option>
                                 </template>
-
                                 <option value="Social">Social</option>
                                 <option value="Knowledge">Knowledge</option>
                                 <option value="Teamwork">Teamwork</option>
                                 <option value="Feedback">Feedback</option>
-
                                 <!--<option value="Content">Content</option>-->
                             </select>
                         </td>
-
                         <td class="rule-status-col">
-                            <div v-if="editedrule.id !== rule.id">
-                            <div class="custom-control custom-checkbox custom-control-inline">
+                            <div v-if="editedrule.id !== rule.id" class="custom-control custom-checkbox custom-control-inline">
 
-                                <label class="checkbox custom-checkbox" >
-                                    <input type="checkbox" v-model="rule.enabled" > Enable rule
-                                </label>
-
+                               <!-- <label class="switch">
+                                    <input type="checkbox" v-model="rule.enabled" checked>
+                                    <span class="slider round"></span>
+                                    <span class="absolute-no">NO</span>
+                                </label> -->
+                                <input type="checkbox" id="checkbox" v-model="rule.enabled">
+                                <label for="checkbox">{{rule.enabled}}</label>
                             </div>
-                                <div v-if="editedrule.id === rule.id">
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-
-                                        <label class="checkbox custom-checkbox" >
-                                            <input type="checkbox" v-model="rule.enabled" spellcheck="true">
-                                        </label>
-                                    </div>
-
-                                    </div>
+                            <div v-if="editedrule.id === rule.id">
+                                <label class="switch custom-switch" >
+                                    <input type="checkbox" v-model="rule.enabled" >
+                                    <span class="slider round"></span>
+                                    <span class="absolute-no">NO</span>
+                                </label>
                             </div>
                         </td>
-
-
                         <td class="center actionContainer">
                              <a href="#" v-if="editedrule.id !== rule.id" v-on:click.stop="onEdit(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                 data-original-title="Edit" v-b-tooltip.hover title="Edit">
@@ -72,14 +64,13 @@
                              <a href="#" v-if="editedrule.id !== rule.id" v-on:click.prevent.stop="onRemove(rule.id,rule.title)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                 data-original-title="Supprimer" v-b-tooltip.hover title="Supprimer">
                                  <i class="uiIconDelete uiIconLightGray"></i></a>
-
                             <a href="#" v-if="editedrule.id === rule.id"v-on:click.stop="onSave(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                data-original-title="Edit" v-b-tooltip.hover title="Save">
                                 <i class="uiIconSave uiIconLightGray"></i></a>
                             <a href="#" v-if="editedrule.id === rule.id" v-on:click.stop="onCancel(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                data-original-title="Cancel" v-b-tooltip.hover title="Cancel">
                                 <i class="uiIcon uiIconStatus-canceled uiIconLightGray"></i></a>
-                            </td>
+                        </td>
                         </tr>
                         <tr v-if="!rules.length">
                             <td colspan="5" class="p-y-3 text-xs-center">
@@ -87,13 +78,11 @@
                             </td>
                         </tr>
                     </tbody>
-
                 </table>
             </b-col>
-            </b-row>
+        </b-row>
     </b-container>
 </template>
-
 <script>
     import Vue from 'vue'
     import BootstrapVue from 'bootstrap-vue'
@@ -179,8 +168,7 @@
     input.rule-desc-col {
         min-width: 98%;
     }
-
-    /* switch test
+ /* switch test */
     .switch {
         position: relative;
         display: inline-block;
@@ -255,7 +243,7 @@
         transform: translateX(160px);
     }
 
-    Rounded sliders
+   /* Rounded sliders */
     .slider.round {
         border-radius: 100px;
     }
@@ -273,7 +261,7 @@
         height: 84px;
         line-height: 51px;
         cursor: pointer;
-    } */
+    }
 
     input.rule-needed-score-col{
         max-width: 60px;

@@ -1,10 +1,7 @@
 <template>
-
     <div style="line-height: 20px;">
         <div class="container fluid">
             <div class="col-sm-12 card">
-
-
                 <div>
                     <div class="btn" id="headingOne">
                         <h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Badge</button></h5>
@@ -37,16 +34,8 @@
                                     <div id="descriptionInputGroup">
                                         <label class="col-form-label pt-0" id="descriptionInput">Description:</label>
                                         <textarea id="badgeDescription" v-model="badge.description" class="form-control" placeholder="Enter description" :rows="3" :max-rows="6">
-                            </textarea>
+                                         </textarea>
                                     </div>
-
-
-
-
-
-
-
-
 
                                     <form id="neededScoreInputGroup" >
                                         <label id="Needed" label-for="neededScoreInput" class="pt-0">score:</label>
@@ -62,20 +51,9 @@
                                         <b-form-file v-model="badge.icon" placeholder="Choose a file..." accept="image/jpeg, image/png, image/gif"></b-form-file>
                                     </form>
 
-                                    <!--    <form-group id="startValidityDateInputGroup ">
-                                            <label id="startValidityInputGroup" for="startValidityInput" class="col-form-label pt-0">Start Validity Date:</label>
-                                            <date-picker name="startValidityDateInput" id="startValidityDateInput" v-model="badge.startValidityDate" :config="config"
-                                                         placeholder="Enter badge's start validity date"></date-picker>
-                                        </form-group>
-                                        <form-group id="endValidityDateInputGroup">
-                                            <label id="End Validity Date:" class="col-form-label pt-0" label-for="endValidityDateInput">End Validity Date:</label>
-                                            <date-picker name="endValidityDateInput" id="endValidityDateInput" v-model="badge.endValidityDate" :config="config" placeholder="Enter badge's start validity date"></date-picker>
-                                        </form-group> -->
-
                                     <form id="domainSelectboxGroup">
                                         <select v-model="badge.domain" class="mb-4" required>
                                             <template slot="first">
-
                                                 <option :value="null" disabled placeholder="Please select a domain"></option>
                                             </template>
 
@@ -83,7 +61,6 @@
                                             <option value="Knowledge">Knowledge</option>
                                             <option value="Teamwork">Teamwork</option>
                                             <option value="Feedback">Feedback</option>
-
                                             <!--
                                             <option value="Content">Content</option>
                                             -->
@@ -93,7 +70,6 @@
                                             Domain is required please choice a domain {{dismissCountDown}} ...
                                         </b-alert>
                                     </form>
-
                                     <!--<div id="enableCheckboxGroup">
                                         <b-form-checkbox v-model="badge.enabled">Enable rule</b-form-checkbox>
                                     </div>
@@ -106,27 +82,17 @@
                                         <span class="slider round"></span>
                                         <span class="absolute-no">NO</span>
                                     </label>
-
-
                                     <b-row style="display: inherit;">
                                         <b-col>
 
-                                            <b-button type="submit" v-on:click.prevent="onSubmit" class="btn btn-primary">
+                                            <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit" >
                                                 {{badge.id ? 'Update' : 'Add'}} badge
                                             </b-button>
                                         </b-col>
-                                        <div style="width: max-content;margin-top: 2em;padding: 2px 20px;">
-                                            <button type="submit" v-if="badge.id" v-on:click.prevent="onCancel" class="btn btn-secondary">Cancel</button>
-                                        </div>
                                     </b-row>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -196,6 +162,7 @@
             onSubmit() {
                 if (this.validateForm()) {
                     this.$emit('submit', this.badge)
+                    this.SaveBadgeForm().hide()
                 }
             },
             countDownChanged(dismissCountDown) {
@@ -213,10 +180,10 @@
         }
     }
 </script>
-
 <style scoped>
     form {
         margin-bottom: 24px;
+        display: block !important;
     }
     .card.col label {
         display: block;
@@ -276,8 +243,8 @@
     .require-msg {
         max-width: 100% !important;
         font-size: 14px;
-        padding: 10px;
     }
+
     .close {
         float: right;
         font-size: 21px;
@@ -303,7 +270,7 @@
         width: max-content;
         margin-top: 2em;
     }
-    .btn {
+    div.btn {
         display: inline-block;
         padding: 1.25rem 0.75rem;
     }
