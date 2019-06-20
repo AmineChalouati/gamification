@@ -10,7 +10,6 @@
                 </div>
                 <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 80px;">
 
-
                     <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
                    <!--  <div tabindex="-1" style="position: fixed; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
                     <div class="popupHeader ClearFix">
@@ -23,13 +22,10 @@
                                         <input id="titleInput" type="text" v-model="rule.title" required placeholder="Enter rule's title">
                                         </input>
 
-
                                         <b-alert v-if="formErrors.title" :show="dismissCountDown" dismissible variant="danger" class="require-msg" @dismissed="dismissCountdown=0" @dismiss-count-down="countDownChanged">
                                             Rule title is required please enter a title {{dismissCountDown}} ...
                                         </b-alert>
                                     </form>
-
-
 
                                     <form id="descriptionInputGroup">
                                         <label class="col-form-label pt-0">Description:</label>
@@ -37,8 +33,6 @@
                                         <textarea id="ruleDescription" v-model="rule.description" placeholder="Enter description" :rows="3" :max-rows="6">
                             </textarea>
                                     </form>
-
-
                                     <form id="scoreInputGroup">
 
                                         <label id="scoreInputGroup" for="scoreInput" class="col-form-label pt-0">Score:</label>
@@ -50,32 +44,29 @@
                                     </form>
 
                         <label class="switch">
-                            <input type="checkbox" v-model="rule.enabled" checked>
+                            <input type="checkbox" v-model="rule.enabled" >
                             <span class="slider round"></span>
                             <span class="absolute-no">NO</span>
                         </label>
-
-
-                                    <form id="areaSelectboxGroup">
-                                        <select v-model="rule.area" class="mb-4">
-                                            <template slot="first">
-
-                                                <option :value="null" disabled>-- Please select an area --</option>
-                                            </template>
-
-                                            <option value="Social">Social</option>
-                                            <option value="Knowledge">Knowledge</option>
-                                            <option value="Teamwork">Teamwork</option>
-                                            <option value="Feedback">Feedback</option>
-                                        </select>
-                                    </form>
-                                    <div class="row">
-                                        <b-col>
-                                            <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit" >
-                                                {{rule.id ? 'Update' : 'Add'}} rule
-                                            </b-button>
-                                        </b-col>
-                                    </div>
+                            <form id="areaSelectboxGroup">
+                                <select v-model="rule.area" class="mb-4">
+                                    <template slot="first">
+                                        <option :value="null" disabled>-- Please select an area --</option>
+                                    </template>
+                                    <option value="Social">Social</option>
+                                    <option value="Knowledge">Knowledge</option>
+                                    <option value="Teamwork">Teamwork</option>
+                                    <option value="Feedback">Feedback</option>
+                                    <option value="Reward">reward</option>
+                                </select>
+                            </form>
+                            <div class="row">
+                                <b-col>
+                                    <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit" >
+                                        {{rule.id ? 'Update' : 'Add'}} rule
+                                    </b-button>
+                                </b-col>
+                            </div>
                         </div>
                 </div>
                 </div>
@@ -149,6 +140,8 @@
             onSubmit() {
                 if (this.validateForm()) {
                     this.createRule(this.rule)
+                  //  $('[href="#collapseOne"]').tab('show');
+                    this.SaveBadgeForm.update()
                 }
 
             },
@@ -166,7 +159,7 @@
                 axios.post(`/rest/gamification/rules/add`, ruleDTO)
                     .then(response => {
                         this.$emit('sucessAdd', this.rule)
-                        this.SaveRuleForm().hide()
+
                     })
                     .catch(e => {
                         this.$emit('failAdd', this.rule)
@@ -196,6 +189,7 @@
         margin-right: -5px;
         margin-left: -5px;
     }
+
     btn {
         color: #4d5466;
         font-family: Helvetica, arial, sans-serif;
@@ -350,10 +344,10 @@
         position: absolute;
         z-index: 2;
         content: "";
-        height: 65px;
+        height: 55px;
         width: 54px;
         left: 2px;
-        bottom: -1px;
+        bottom: 0px;
         background-color: darkgrey;
         -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);

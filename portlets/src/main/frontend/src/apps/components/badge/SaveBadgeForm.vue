@@ -85,7 +85,7 @@
                                     <b-row style="display: inherit;">
                                         <b-col>
 
-                                            <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit" >
+                                            <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit"  >
                                                 {{badge.id ? 'Update' : 'Add'}} badge
                                             </b-button>
                                         </b-col>
@@ -162,7 +162,7 @@
             onSubmit() {
                 if (this.validateForm()) {
                     this.$emit('submit', this.badge)
-                    this.SaveBadgeForm().hide()
+                    this.currentTarget.className +=" in collapse"
                 }
             },
             countDownChanged(dismissCountDown) {
@@ -244,7 +244,6 @@
         max-width: 100% !important;
         font-size: 14px;
     }
-
     .close {
         float: right;
         font-size: 21px;
