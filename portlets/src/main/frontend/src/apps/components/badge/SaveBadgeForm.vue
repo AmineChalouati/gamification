@@ -61,6 +61,7 @@
                                             <option value="Knowledge">Knowledge</option>
                                             <option value="Teamwork">Teamwork</option>
                                             <option value="Feedback">Feedback</option>
+                                            <option value="Reward">Reward</option>
                                             <!--
                                             <option value="Content">Content</option>
                                             -->

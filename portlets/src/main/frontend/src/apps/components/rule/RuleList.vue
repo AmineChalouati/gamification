@@ -56,15 +56,14 @@
                            <label for="checkbox">{{rule.enabled}}</label>-->
                         </div>
                         <div v-else>
-                            <label class="switch">
-                                <input type="checkbox" v-model="editedrule.disabled">
+                            <label class="switch" v-on:click ="rule.enabled = !rule.enabled">
+                                <input type="checkbox" v-model="rule.enabled">
                                 <span class="slider round"></span>
                                 <span class="absolute-no">NO</span>
                             </label>
                             <!-- <span class="uiCheckbox"><input type="checkbox" checked="" name="isDocumentTemplate" class="checkbox" id="isDocumentTemplate"><span>Check me out</span></span>-->
                         </div>
                         </td>
-
 
                          <td class="center actionContainer">
                               <a href="#" v-if="editedrule.id !== rule.id" v-on:click.stop="onEdit(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
@@ -73,7 +72,7 @@
                               <a href="#" v-if="editedrule.id !== rule.id" v-on:click.prevent.stop="onRemove(rule.id,rule.title)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                  data-original-title="Supprimer" v-b-tooltip.hover title="Supprimer">
                                   <i class="uiIconDelete uiIconLightGray"></i></a>
-                             <a href="#" v-if="editedrule.id === rule.id"v-on:click.stop="onSave(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
+                             <a href="#" v-if="editedrule.id === rule.id" v-on:click.stop="onSave(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
                                 data-original-title="Edit" v-b-tooltip.hover title="Save">
                                  <i class="uiIconSave uiIconLightGray"></i></a>
                              <a href="#" v-if="editedrule.id === rule.id" v-on:click.stop="onCancel(rule)" data-placement="bottom" rel="tooltip" class="actionIcon"
@@ -109,7 +108,8 @@
          data() {
              return {
                  formErrors: {},
-                 editedrule : {}
+                 editedrule : {},
+                 isEnabled: false
 
              }
          },
@@ -117,20 +117,10 @@
              onEdit(rule) {
                  this.rule=rule;
                  this.editedrule=rule;
-
-
-             },
-             watch: {
-                 'rule.id'() {
-                     this.formErrors = {}
-                     this.selectedFile = undefined
-                     this.selectedFileName = this.rule.imageName
-                 }
              },
              onSave(rule) {
                  this.$emit('save', rule);
-
-
+                 this.editedrule= {};
              },
              onCancel(rule) {
                  this.editedrule= {};

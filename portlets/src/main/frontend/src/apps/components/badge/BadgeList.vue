@@ -50,13 +50,13 @@
                         </td>
 
 
-                        <td class="badge-icon-col" style="max-width: 185px;">
+                     <!--   <td class="badge-icon-col" style="max-width: 185px;">
                             <span v-if="editedbadge.id !== badge.id">
 
                                 <img thumbnail fluid :src="`/rest/gamification/reputation/badge/${badge.title}/avatar`" alt="Thumbnail" class="m-1"  width="40" height="40"/>
                             </span>
                             <b-form-file v-if="editedbadge.id === badge.id" v-model="badge.icon" placeholder="Choose a file..." accept="image/jpeg, image/png, image/gif"></b-form-file>
-                        </td>
+                        </td> -->
                         <td class="badge-status-col">
                             <div v-if="editedbadge.id !== badge.id">
                                 <label class="switch">
@@ -67,8 +67,8 @@
                             </div>
 
 <div v-if="editedbadge.id === badge.id">
-                            <label class="switch">
-                                <input type="checkbox" v-model="badge.enabled" checked>
+                            <label class="switch" v-on:click ="badge.enabled = !badge.enabled">
+                                <input type="checkbox" v-model="badge.enabled">
                                 <span class="slider round"></span>
                                 <span class="absolute-no">NO</span>
                             </label>
