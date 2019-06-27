@@ -66,13 +66,13 @@
                                 </label>
                             </div>
 
-<div v-if="editedbadge.id === badge.id">
-                            <label class="switch" v-on:click ="badge.enabled = !badge.enabled">
-                                <input type="checkbox" v-model="badge.enabled">
-                                <span class="slider round"></span>
-                                <span class="absolute-no">NO</span>
-                            </label>
-</div>
+                            <div v-if="editedbadge.id === badge.id">
+                                <label class="switch" v-on:click ="badge.enabled = !badge.enabled">
+                                    <input type="checkbox" v-model="badge.enabled">
+                                    <span class="slider round"></span>
+                                    <span class="absolute-no">NO</span>
+                                </label>
+                            </div>
                         </td>
                       <!--  <td class="badge-created-date-col">
                             <span v-if="editedbadge.id !== badge.id">{{badge.createdBy}}</span>
