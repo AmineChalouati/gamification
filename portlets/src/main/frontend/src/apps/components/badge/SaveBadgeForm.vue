@@ -1,17 +1,17 @@
 <template>
     <div style="line-height: 40px;">
         <div class="fluid">
-            <div class="col-sm-12 card">
+            <div class="col-sm-12 fluid">
                 <div>
                     <div class="btn" id="headingOne">
                         <h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Badge</button></h5>
                     </div>
 
 
-                    <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 35px;">
+                    <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top:-15px;">
                         <div class="card-body">
 
-                            <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
+                            <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; margin: 0 auto; z-index: 1; max-width: 100%;">
                                 <!-- <div tabindex="-1" style="position: absolute; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
                                 <div class="popupHeader ClearFix">
                                     <a class="uiIconClose" aria-controls="collapseOne" aria-expanded="false" data-target="#collapseOne" data-toggle="collapse" aria-hidden="true" data-dismiss="modal" ></a>
@@ -183,7 +183,7 @@
 </script>
 <style scoped>
     form {
-        margin-bottom: 24px;
+        margin-bottom: 15px;
         display: block !important;
     }
     .card.col label {
@@ -228,6 +228,9 @@
         -moz-box-shadow: 0 0 6px #f8b9b7;
         box-shadow: 0 0 6px #f8b9b7;
     }
+    .PopupContent.popupContent {
+        padding: 0 15px 10px 15px;
+    }
     .card {
         position: relative;
         border-radius: 3px;
@@ -268,7 +271,6 @@
     .btn-primary {
         background-color: #476a9c;
         width: max-content;
-        margin-top: 2em;
     }
     div.btn {
         display: inline-block;
@@ -295,9 +297,9 @@
     button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary {
         background: #3c8dbc;
         color: white;
-        padding: 5px 10px;
+        padding: 5px 25px;
         position: absolute;
-        right: 10px;
+        right: 42px;
         top: 10px;
         text-decoration: none;
     }
@@ -365,7 +367,7 @@
         left: 0;
         z-index: 1;
         content: "YES";
-        font-size: 45px;
+        font-size: 30px;
         text-align: left !important;
         line-height: 51px;
         padding-left: 0;
@@ -406,9 +408,9 @@
         left: 0;
         color: darkgrey;
         text-align: right !important;
-        font-size: 40px;
+        font-size: 30px;
         width: calc(100% - 25px);
-        height: 84px;
+        height: 51px;
         line-height: 51px;
         cursor: pointer;
     }

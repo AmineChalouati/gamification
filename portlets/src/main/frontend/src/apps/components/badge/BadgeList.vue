@@ -98,10 +98,8 @@
                         </td>
                     </tr>
                     </tbody>
-
                 </table>
             </b-col>
-
         </b-row>
     </b-container>
 </template>

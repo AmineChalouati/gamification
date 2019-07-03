@@ -1,17 +1,17 @@
 <template>
     <div>
 
-        <div class="col-sm-12 card">
+        <div class="col-sm-12 fluid">
 
             <div class="btn" id="headingOne">
 
                 <button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link primary" data-target="#collapseOne" data-toggle="collapse" type="button">add Rule</button>
 
             </div>
-            <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top: 80px;">
-
-                <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;">
-                    <!--  <div tabindex="-1" style="position: fixed; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
+            <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordionExample" id="collapseOne" style="height: 0px;top:-15px;">
+                <div class="card-body">
+                <div class="UIPopupWindow uiPopup UIDragObject NormalStyle" id="myForm" style="width: 560px; z-index:1000000; position: relative; top: 20%; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;margin: 0 auto;height: 100%;">
+                 <!-- <div tabindex="-1" style="position: fixed; z-index: 10000; top: 0px; left: 0px; width: 1284px; height: 377px;" class="uiPopupWrapper"> </div> -->
                     <div class="popupHeader ClearFix">
                         <a class="uiIconClose pull-right"  aria-controls="collapseOne" aria-expanded="false" data-target="#collapseOne" data-toggle="collapse" aria-hidden="true" data-dismiss="modal" ></a>
                         <span class="PopupTitle popupTitle">Add Rule</span>
@@ -63,11 +63,12 @@
                         <div class="row">
                             <b-col>
                                 <b-button class="btn-primary" type="submit" v-on:click.prevent="onSubmit" >
-                                    {{rule.id ? 'Update' : 'Add'}} rule
+                                    {{rule.id ? 'Update' : 'Add'}}
                                 </b-button>
                             </b-col>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -267,26 +268,16 @@
     button.btn.btn-link.primary.collapsed, button.btn.btn-link.primary, btn{
         background: #3c8dbc;
         color: white;
-        padding: 5px 10px;
+        padding: 5px 25px;
         position: absolute;
-        right: 10px;
+        right: 42px;
         top: 10px;
         text-decoration: none;
     }
     button.btn.btn-link.primary{
         background: #3c8dbc;
     }
-    .col-sm-12.card {
-        position: relative;
-        border-radius: 3px;
-        background: #ffffff;
-        margin-bottom: 20px;
-        width: 100%;
-        box-shadow: none;
-        margin: 0 auto;
-        padding: 0;
-        border: none;
-    }
+
     .collapse {
         top: 15px;
     }
@@ -296,8 +287,8 @@
         background: #578dc9;
     }
     div#collapseOne {
-        position: absolute;
-        width: 100%;
+       position: absolute;
+        width: 560px;
         min-width: 100%;
         z-index: 100;
         padding: 2px 20px;
@@ -342,7 +333,7 @@
         left: 0;
         z-index: 1;
         content: "YES";
-        font-size: 45px;
+        font-size: 30px;
         text-align: left !important;
         line-height: 51px;
         padding-left: 0;
@@ -383,9 +374,9 @@
         left: 0;
         color: darkgrey;
         text-align: right !important;
-        font-size: 40px;
+        font-size: 30px;
         width: calc(100% - 25px);
-        height: 84px;
+        height: 51px;
         line-height: 51px;
         cursor: pointer;
     }
