@@ -114,6 +114,7 @@
             onEdit(rule) {
                 this.rule=rule;
                 this.editedrule=rule;
+
             },
             onSave(rule) {
                 this.$emit('save', rule);
