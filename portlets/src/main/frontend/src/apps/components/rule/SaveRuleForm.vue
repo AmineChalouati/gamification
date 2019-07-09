@@ -43,7 +43,7 @@
                             </b-alert>
                         </form>
 
-                        <label class="switch">
+                        <label class="uiSwitchBtn">
                             <input type="checkbox" v-model="rule.enabled" >
                             <span class="slider round"></span>
                             <span class="absolute-no">NO</span>
@@ -294,14 +294,14 @@
         padding: 2px 20px;
     }
     /* switch test */
-    .switch {
+    .uiSwitchBtn {
         position: relative;
         display: inline-block;
         width: 150px;
         height: 50px;
         zoom: 50%;
     }
-    .switch input {display:none;}
+    .uiSwitchBtn input {display:none;}
     .slider {
         position: absolute;
         cursor: pointer;
