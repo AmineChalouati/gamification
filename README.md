@@ -81,6 +81,6 @@ encapsulates all code related to command line interface handling.
 
 webpack-dev-server:
 -------------------
-serves a webpack app and updates the browser on changes.
+serves a webpack app and updates the browser on changes
 
            npm install --save-dev webpack webpack-cli webpack-dev-server
